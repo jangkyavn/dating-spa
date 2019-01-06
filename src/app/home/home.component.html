@@ -1,0 +1,18 @@
+<div class="container mt-5">
+  <div *ngIf="!registerMode" class="text-center">
+    <h1>Tìm kết quả của bạn</h1>
+    <p class="lead">Hãy xem kết quả của bạn nào... Tất cả bạn cần là đăng ký!</p>
+    <div>
+      <button class="btn btn-primary btn-lg mr-1" (click)="registerToggle()">Đăng ký</button>
+      <button class="btn btn-info btn-lg">Tìm hiểu thêm</button>
+    </div>
+  </div>
+
+  <div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+      </div>
+    </div>
+  </div>
+</div>
