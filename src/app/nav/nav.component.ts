@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../shared/services/auth.service';
 import { AlertifyService } from '../shared/services/alertify.service';
@@ -13,15 +14,20 @@ export class NavComponent implements OnInit {
   isNavbarCollapsed = true;
 
   constructor(
+    private router: Router,
     public authService: AuthService,
     private alertify: AlertifyService) { }
 
   ngOnInit() { }
 
   login() {
-    this.authService.login(this.model)
-      .subscribe(_ => this.alertify.success('Đăng nhập thành công')
-        , _ => console.log('Đăng nhập thất bại'));
+    this.authService.login(this.model).subscribe(next => {
+      this.alertify.success('Đăng nhập thành công');
+    }, _ => {
+      this.alertify.error('Tài khoản hoặc mật khẩu không đúng');
+    }, () => {
+      this.router.navigate(['/members']);
+    });
   }
 
   loggedIn() {
@@ -31,6 +37,6 @@ export class NavComponent implements OnInit {
   logout() {
     localStorage.removeItem('token');
     this.model = {};
-    console.log('Đã đăng xuất');
+    this.router.navigate(['/home']);
   }
 }
