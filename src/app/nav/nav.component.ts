@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../shared/services/auth.service';
+import { AlertifyService } from '../shared/services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -11,19 +12,20 @@ export class NavComponent implements OnInit {
   model: any = {};
   isNavbarCollapsed = true;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    public authService: AuthService,
+    private alertify: AlertifyService) { }
 
   ngOnInit() { }
 
   login() {
     this.authService.login(this.model)
-      .subscribe(_ => console.log('Đăng nhập thành công')
+      .subscribe(_ => this.alertify.success('Đăng nhập thành công')
         , _ => console.log('Đăng nhập thất bại'));
   }
 
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authService.loggedIn();
   }
 
   logout() {
