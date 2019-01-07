@@ -9,3 +9,22 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.nav-tabs {
+    margin: 0 10px 0 10px;
+}
+
+.nav-tabs > li > a.active, .nav-tabs > li > a:hover { 
+    border-bottom: 3px solid #E95420 !important;
+    color: #E95420 !important;
+    font-weight: bold;
+}
+
+.nav-tabs > li > a {
+    border: none !important;
+    color: black !important;
+}
+
+.tab-pane {
+    padding: 10px !important;
+}

@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" [src]="user?.photoUrl" [alt]="user?.knownAs" />
+        <div class="card-body">
+          <div>
+            <strong>Địa điểm</strong>
+            <p>{{user?.city}}, {{user?.country}}</p>
+          </div>
+          <div>
+            <strong>Tuổi</strong>
+            <p>{{user?.age}}</p>
+          </div>
+          <div>
+            <strong>Tham gia từ</strong>
+            <p>{{user?.created}}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="btn-group d-flex">
+            <button class="btn btn-primary flex-1">Thích</button>
+            <button class="btn btn-success flex-1">Nhắn tin</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="card card-right">
+        <ngb-tabset class="member-tabset">
+          <ngb-tab title="Về {{user?.knownAs}}">
+            <ng-template ngbTabContent>
+              <h4>Mô tả</h4>
+              <p>{{user?.introduction}}</p>
+              <h4>Đang tìm kiếm</h4>
+              <p>{{user?.lookingFor}}</p>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Sở thích">
+            <ng-template ngbTabContent>
+              <h4>Sở thích</h4>
+              <p>{{user?.interests}}</p>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Ảnh">
+            <ng-template ngbTabContent>
+              <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Tin nhắn">
+            <ng-template ngbTabContent>
+              sadasd
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>
