@@ -21,7 +21,7 @@
           Xin chào {{authService.decodedToken?.unique_name | titlecase}}
         </a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button class="dropdown-item">
+          <button class="dropdown-item" [routerLink]="['/member/edit']">
             <i class="fa fa-user"></i>&nbsp;Sửa hồ sơ
           </button>
           <div class="dropdown-divider"></div>
