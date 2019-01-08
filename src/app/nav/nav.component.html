@@ -17,6 +17,9 @@
         </li>
       </ul>
       <div *ngIf="loggedIn()" ngbDropdown class="d-inline-block">
+        <span>
+          <img [src]="photoUrl" [alt]="authService.currentUser?.knownAs" class=rounded-circle />
+        </span>
         <a href="javascript:;" id="dropdownBasic1" ngbDropdownToggle class="text-white btn-dropdown">
           Xin chào {{authService.decodedToken?.unique_name | titlecase}}
         </a>

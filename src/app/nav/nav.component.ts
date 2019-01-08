@@ -12,13 +12,18 @@ import { AlertifyService } from '../shared/services/alertify.service';
 export class NavComponent implements OnInit {
   model: any = {};
   isNavbarCollapsed = true;
+  photoUrl: string;
 
   constructor(
     private router: Router,
     public authService: AuthService,
     private alertify: AlertifyService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe(photoUrl => {
+      this.photoUrl = photoUrl;
+    });
+  }
 
   login() {
     this.authService.login(this.model).subscribe(next => {
@@ -36,6 +41,9 @@ export class NavComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authService.decodedToken = null;
+    this.authService.currentUser = null;
     this.model = {};
     this.router.navigate(['/home']);
   }
