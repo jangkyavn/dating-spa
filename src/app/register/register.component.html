@@ -1,14 +1,122 @@
-<form #registerForm="ngForm" (ngSubmit)="register()">
+<form [formGroup]="registerForm" (ngSubmit)="register()">
   <h2 class="text-center text-primary">Đăng ký</h2>
   <hr />
-  <div class="form-group">
-    <input type="text" class="form-control" required name="username" [(ngModel)]="model.username" placeholder="Tài khoản">
+  <div class="form-group d-flex flex-row mb-0">
+    <label class="control-label">Tôi là: </label>
+    <div class="custom-control custom-radio ml-3">
+      <input type="radio" class="custom-control-input" id="rdoMale" name="gender" value="male" formControlName="gender">
+      <label class="custom-control-label" for="rdoMale">Nam</label>
+    </div>
+    <div class="custom-control custom-radio ml-3">
+      <input type="radio" class="custom-control-input" id="rdoFemale" name="gender" value="female" formControlName="gender">
+      <label class="custom-control-label" for="rdoFemale">Nữ</label>
+    </div>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" required name="password" [(ngModel)]="model.password" placeholder="Mật khẩu">
+    <input type="text" class="form-control" formControlName="username" placeholder="Tài khoản" [ngClass]="{
+      'is-valid': !registerForm.controls['username'].errors,
+      'is-invalid': registerForm.controls['username'].errors && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('username').hasError('required')">
+        Vui lòng nhập tài khoản.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" formControlName="password" placeholder="Mật khẩu" [ngClass]="{
+      'is-valid': !registerForm.controls['password'].errors,
+      'is-invalid': registerForm.controls['password'].errors && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('password').hasError('required')">
+        Vui lòng nhập mật khẩu.
+      </div>
+      <div *ngIf="registerForm.get('password').hasError('minlength')">
+        Vui lòng nhập mật khẩu ít nhất 4 ký tự.
+      </div>
+      <div *ngIf="registerForm.get('password').hasError('maxlength')">
+        Vui lòng nhập mật khẩu không quá 8 ký tự.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Xác nhận mật khẩu"
+      [ngClass]="{
+      'is-valid': !registerForm.controls['confirmPassword'].errors,
+      'is-invalid': registerForm.controls['confirmPassword'].errors && (registerForm.controls['confirmPassword'].dirty || registerForm.controls['confirmPassword'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('confirmPassword').hasError('required')">
+        Vui lòng nhập xác nhận mật khẩu.
+      </div>
+      <div *ngIf="registerForm.get('confirmPassword').hasError('notsame') && !registerForm.get('confirmPassword').hasError('required')">
+        Mật khẩu và xác nhận mật khẩu chưa trùng khớp.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" formControlName="knownAs" placeholder="Tên thật" [ngClass]="{
+      'is-valid': !registerForm.controls['knownAs'].errors,
+      'is-invalid': registerForm.controls['knownAs'].errors && (registerForm.controls['knownAs'].dirty || registerForm.controls['knownAs'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('knownAs').hasError('required')">
+        Vui lòng nhập tên thật.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <!-- <input type="date" class="form-control" formControlName="dateOfBirth" placeholder="Ngày sinh" [ngClass]="{
+      'is-valid': !registerForm.controls['dateOfBirth'].errors,
+      'is-invalid': registerForm.controls['dateOfBirth'].errors && (registerForm.controls['dateOfBirth'].dirty || registerForm.controls['dateOfBirth'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('dateOfBirth').hasError('required')">
+        Vui lòng chọn ngày sinh.
+      </div>
+    </div> -->
+    <div class="input-group">
+      <input class="form-control" placeholder="dd/mm/yyyy" name="dp" formControlName="dateOfBirth" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate"
+        [readonly]="true" [ngClass]="{
+        'is-valid': !registerForm.controls['dateOfBirth'].errors,
+        'is-invalid': registerForm.controls['dateOfBirth'].errors && (registerForm.controls['dateOfBirth'].dirty || registerForm.controls['dateOfBirth'].touched)
+      }"
+        (blur)="onBlurDateOfBirth(registerForm.get('dateOfBirth').hasError('required'))">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </div>
+    </div>
+    <div class="invalid-feedback" [ngStyle]="{'display': invalidDate ? 'block' : 'none'}">
+      Vui lòng chọn ngày sinh.
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" formControlName="city" placeholder="Thành phố" [ngClass]="{
+      'is-valid': !registerForm.controls['city'].errors,
+      'is-invalid': registerForm.controls['city'].errors && (registerForm.controls['city'].dirty || registerForm.controls['city'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('city').hasError('required')">
+        Vui lòng nhập thành phố.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" formControlName="country" placeholder="Quốc gia" [ngClass]="{
+      'is-valid': !registerForm.controls['country'].errors,
+      'is-invalid': registerForm.controls['country'].errors && (registerForm.controls['country'].dirty || registerForm.controls['country'].touched)
+    }">
+    <div class="invalid-feedback">
+      <div *ngIf="registerForm.get('country').hasError('required')">
+        Vui lòng nhập quốc gia.
+      </div>
+    </div>
   </div>
   <div class="form-group text-center">
-    <button class="btn btn-success mr-1" type="submit">Đăng ký</button>
+    <button class="btn btn-success mr-1" [disabled]="!registerForm.valid" type="submit">Đăng ký</button>
     <button class="btn btn-default" type="button" (click)="cancel()">Hủy bỏ</button>
   </div>
 </form>

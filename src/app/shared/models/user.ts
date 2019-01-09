@@ -6,6 +6,7 @@ export interface User {
     gender: string;
     age: number;
     knownAs: string;
+    dateOfBirth: Date;
     created: Date;
     lastActive: Date;
     introduction?: string;
@@ -15,5 +16,5 @@ export interface User {
     country: string;
     photoUrl: string;
     photos?: Photo[];
-    isActive: boolean;
+    isActive?: boolean;
 }
