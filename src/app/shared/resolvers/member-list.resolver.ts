@@ -12,13 +12,16 @@ import { User } from '../models/user';
     providedIn: 'root'
 })
 export class MemberListResolver implements Resolve<User[]> {
+    pageNumber = 1;
+    pageSize = 5;
+
     constructor(
         private router: Router,
         private userService: UserService,
         private alertify: AlertifyService) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-        return this.userService.getUsers().pipe(
+        return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
             catchError(_ => {
                 this.alertify.error('Có lỗi xảy ra');
                 this.router.navigate(['/home']);

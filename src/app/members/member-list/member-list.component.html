@@ -1,7 +1,48 @@
-<div class="container mt-5">
+<div class="text-center mt-3">
+  <h2>Kết quả - {{pagination.totalItems}}</h2>
+</div>
+
+<div class="container mt-3">
+  <form class="form-inline mb-3" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
+    <div class="form-group">
+      <label for="minAge">Tuổi từ:</label>
+      <input type="number" class="form-control" style="width: 70px;" id="minAge" name="minAge" minlength="18"
+        [(ngModel)]="userParams.minAge">
+    </div>
+    <div class="form-group px-2">
+      <label for="maxAge">đến:</label>
+      <input type="number" class="form-control" style="width: 70px;" id="maxAge" name="maxAge" maxlength="99"
+        [(ngModel)]="userParams.maxAge">
+    </div>
+    <div class="form-group px-2">
+      <label for="gender"> Hiển thị:</label>
+      <select class="form-control" style="width: 130px;" id="gender" name="gender" [(ngModel)]="userParams.gender">
+        <option *ngFor="let gender of genderList" [value]="gender.value">
+          {{gender.display}}
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">Lọc</button>
+    <button type="button" class="btn btn-info" (click)="resetFilter()">Đặt lại</button>
+
+    <div class="col">
+      <div class="btn-group btn-group-toggle float-right" ngbRadioGroup name="radioBasic" [(ngModel)]="userParams.orderBy" (ngModelChange)="loadUsers()">
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="lastActive"> Lần cuối hoạt động
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="created"> Ngày tham gia
+        </label>
+      </div>
+    </div>
+  </form>
+
   <div class="row">
     <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6">
       <app-member-card [user]="user"></app-member-card>
     </div>
   </div>
 </div>
+
+<ngb-pagination class="d-flex justify-content-center" [collectionSize]="pagination.totalItems" [pageSize]="pagination.itemsPerPage"
+  [(page)]="pagination.currentPage" [boundaryLinks]="true" (pageChange)="pageChanged($event)"></ngb-pagination>
