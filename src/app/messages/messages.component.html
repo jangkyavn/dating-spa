@@ -1,3 +1,50 @@
-<p>
-  messages works!
-</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="messageContainer"
+      (ngModelChange)="loadMessages()">
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="Unread"><i class="fa fa-envelope"></i> Chưa đọc
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="Inbox"><i class="fa fa-envelope-open"></i> Hộp thư đến
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="Outbox"><i class="fa fa-paper-plane"></i> Hộp thư đi
+        </label>
+    </div>
+  </div>
+  <div class="row" *ngIf="messages.length == 0">
+    <h3>Không có tin nhắn</h3>
+  </div>
+  <div class="row mt-3" *ngIf="messages.length > 0">
+    <table class="table table-hover" style="cursor: pointer">
+      <tr>
+        <th style="width: 40%">Tin nhắn</th>
+        <th style="width: 20%">Đén từ / To</th>
+        <th style="width: 20%">Gửi / Nhận</th>
+        <th style="width: 20%"></th>
+      </tr>
+      <tr *ngFor="let message of messages" [routerLink]="['/members', 
+          messageContainer == 'Outbox' ? message.recipientId : message.senderId]" [queryParams]="{tab: '4'}">
+        <td>{{message.content}}</td>
+        <td>
+          <div *ngIf="messageContainer != 'Outbox'">
+            <img src={{message?.senderPhotoUrl}} class="img-circle rounded-circle mr-2">
+            <strong>{{message.senderKnownAs}}</strong>
+          </div>
+          <div *ngIf="messageContainer == 'Outbox'">
+            <img src={{message?.recipientPhotoUrl}} class="img-circle rounded-circle mr-2">
+            <strong>{{message.recipientKnownAs}}</strong>
+          </div>
+        </td>
+        <td>{{message.messageSent | timeAgo}}</td>
+        <td>
+          <button class="btn btn-danger" (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)">Xóa</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<ngb-pagination class="d-flex justify-content-center" [collectionSize]="pagination.totalItems" [pageSize]="pagination.itemsPerPage"
+  [(page)]="pagination.currentPage" [boundaryLinks]="true" (pageChange)="pageChanged($event)"></ngb-pagination>

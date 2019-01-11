@@ -8,12 +8,12 @@
         </button>
       </li>
       <li class="list-inline-item">
-        <button class="btn btn-primary" title="Thích">
+        <button class="btn btn-primary" title="Thích" (click)="sendLike(user.id)">
           <i class="fa fa-heart"></i>
         </button>
       </li>
       <li class="list-inline-item">
-        <button class="btn btn-primary" title="Nhắn tin">
+        <button class="btn btn-primary" title="Nhắn tin" [routerLink]="['/members', user.id]" [queryParams]="{tab: 4}">
           <i class="fa fa-envelope"></i>
         </button>
       </li>

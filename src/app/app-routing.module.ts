@@ -14,6 +14,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { MemberDetailResolver } from './shared/resolvers/member-detail.resolver';
 import { MemberListResolver } from './shared/resolvers/member-list.resolver';
 import { MemberEditResolver } from './shared/resolvers/member-edit.resolver';
+import { ListsResolver } from './shared/resolvers/lists.resolver';
+import { MessagesResolver } from './shared/resolvers/messages.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +24,10 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      { path: 'lists', component: ListsComponent },
+      {
+        path: 'lists', component: ListsComponent,
+        resolve: { users: ListsResolver }
+      },
       {
         path: 'members', component: MemberListComponent,
         resolve: { users: MemberListResolver }
@@ -35,7 +40,10 @@ const routes: Routes = [
         path: 'member/edit', component: MemberEditComponent,
         resolve: { user: MemberEditResolver }, canDeactivate: [PreventUnsavedChangesGuard]
       },
-      { path: 'messages', component: MessagesComponent },
+      {
+        path: 'messages', component: MessagesComponent,
+        resolve: { messages: MessagesResolver }
+      }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }

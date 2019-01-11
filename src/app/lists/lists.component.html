@@ -1,3 +1,24 @@
-<p>
-  lists works!
-</p>
+<div class="text-center mt-3">
+  <h2>{{likesParam === 'Likers' ? 'Những người thích tôi' : 'Những người tôi thích'}} : {{pagination.totalItems}}</h2>
+</div>
+<div class="container mt-3">
+  <div class="row">
+    <div class="btn-group btn-group-toggle float-right" ngbRadioGroup name="radioBasic" [(ngModel)]="likesParam"
+      (ngModelChange)="loadUsers()">
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="Likers"> Những người thích tôi
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="Likees"> Những người tôi thích
+      </label>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div *ngFor="let user of users" class="col-sm-6 col-md-4 col-lg-4 col-xl-2">
+      <app-member-card [user]="user"></app-member-card>
+    </div>
+  </div>
+</div>
+<ngb-pagination *ngIf="pagination.totalItems" class="d-flex justify-content-center" [collectionSize]="pagination.totalItems" [pageSize]="pagination.itemsPerPage"
+  [(page)]="pagination.currentPage" [boundaryLinks]="true" (pageChange)="pageChanged($event)"></ngb-pagination>

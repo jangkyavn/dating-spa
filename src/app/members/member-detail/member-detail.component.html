@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <p class="h1">Hồ sơ về {{user?.knownAs}}</p>
+  <p class="h1">Hồ sơ về {{user?.knownAs}}</p>
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
@@ -25,15 +25,15 @@
         <div class="card-footer">
           <div class="btn-group d-flex">
             <button class="btn btn-primary flex-1">Thích</button>
-            <button class="btn btn-success flex-1">Nhắn tin</button>
+            <button class="btn btn-success flex-1" (click)="selectTab('tab4')">Nhắn tin</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col-sm-8">
       <div class="card card-right">
-        <ngb-tabset class="member-tabset">
-          <ngb-tab title="Về {{user?.knownAs}}">
+        <ngb-tabset class="member-tabset" #memberTabs>
+          <ngb-tab title="Về {{user?.knownAs}}" id="tab1">
             <ng-template ngbTabContent>
               <h4>Mô tả</h4>
               <p>{{user?.introduction}}</p>
@@ -41,20 +41,20 @@
               <p>{{user?.lookingFor}}</p>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Sở thích">
+          <ngb-tab title="Sở thích" id="tab2">
             <ng-template ngbTabContent>
               <h4>Sở thích</h4>
               <p>{{user?.interests}}</p>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Ảnh">
+          <ngb-tab title="Ảnh" id="tab3">
             <ng-template ngbTabContent>
               <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Tin nhắn">
+          <ngb-tab title="Tin nhắn" id="tab4">
             <ng-template ngbTabContent>
-              sadasd
+              <app-member-messages [recipientId]="user.id"></app-member-messages>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>
