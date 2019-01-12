@@ -1,0 +1,17 @@
+<div class="container mt-5">
+  <h2>Quản trị</h2>
+  <div class="tab-panel">
+    <ngb-tabset class="member-tabset" #memberTabs>
+      <ngb-tab title="Quản lý người dùng" id="tab1" *appHasRole="['Admin']">
+        <ng-template ngbTabContent>
+          <app-user-management></app-user-management>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Quản lý hình ảnh" id="tab2" *appHasRole="['Admin', 'Moderator']">
+        <ng-template ngbTabContent>
+          <app-photo-management></app-photo-management>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

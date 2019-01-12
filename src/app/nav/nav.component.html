@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0" *ngIf="loggedIn()">
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [routerLink]="['/members']">Kết quả</a>
         </li>
@@ -14,6 +14,9 @@
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" [routerLink]="['/messages']">Tin nhắn</a>
+        </li>
+        <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/admin']">Quản trị</a>
         </li>
       </ul>
       <div *ngIf="loggedIn()" ngbDropdown class="d-inline-block">
@@ -33,7 +36,7 @@
           </button>
         </div>
       </div>
-      <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+      <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0 ml-auto" (ngSubmit)="login()">
         <input class="form-control mr-sm-2" type="text" name="username" placeholder="Tài khoản" required [(ngModel)]="model.username" />
         <input class="form-control mr-sm-2" type="password" name="password" placeholder="Mật khẩu" required [(ngModel)]="model.password" />
         <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">

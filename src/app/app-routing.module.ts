@@ -16,6 +16,8 @@ import { MemberListResolver } from './shared/resolvers/member-list.resolver';
 import { MemberEditResolver } from './shared/resolvers/member-edit.resolver';
 import { ListsResolver } from './shared/resolvers/lists.resolver';
 import { MessagesResolver } from './shared/resolvers/messages.resolver';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { ModalDirective } from './modal.directive';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,6 +45,10 @@ const routes: Routes = [
       {
         path: 'messages', component: MessagesComponent,
         resolve: { messages: MessagesResolver }
+      },
+      {
+        path: 'admin', component: AdminPanelComponent,
+        data: { roles: ['Admin', 'Moderator'] }
       }
     ]
   },
@@ -50,7 +56,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+   imports: [
+      RouterModule.forRoot(routes)
+   ],
+   exports: [
+      RouterModule
+   ],
+   declarations: [
+      ModalDirective
+   ]
 })
 export class AppRoutingModule { }

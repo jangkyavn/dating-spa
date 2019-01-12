@@ -1,0 +1,18 @@
+<div class="row">
+  <table class="table">
+    <tr>
+      <th style="width: 10%">STT</th>
+      <th style="width: 30%">Tài khoản</th>
+      <th style="width: 40%">Vai trò</th>
+      <th style="width: 20%"></th>
+    </tr>
+    <tr *ngFor="let user of users; let i = index;">
+      <td>{{i + 1}}</td>
+      <td>{{user.userName}}</td>
+      <td>{{user.roles}}</td>
+      <td>
+        <button class="btn btn-info" (click)="editRolesModal(user)">Sửa vai trò</button>
+      </td>
+    </tr>
+  </table>
+</div>
