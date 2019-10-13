@@ -23,6 +23,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ErrorInterceptorProvider } from './shared/services/error.interceptor';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -61,7 +62,7 @@ export function tokenGetter() {
       FileUploadModule,
       AppRoutingModule
    ],
-   providers: [],
+   providers: [ErrorInterceptorProvider],
    bootstrap: [
       AppComponent
    ]
